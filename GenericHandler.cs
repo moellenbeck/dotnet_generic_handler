@@ -24,7 +24,11 @@ namespace dotnet_samples
 
                 TPayload payload = default(TPayload);
 
+                // TODO:payload = JsonConvert.DeserializeObject(rawPayload, TPayload);
+
                 TResult result = handler(payload);
+
+                // TODO: rawResult = JsonConvert.SerializeObject(result);
 
                 rawResult = result.ToString();
 
