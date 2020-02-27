@@ -2,6 +2,7 @@ namespace dotnet_samples
 {
     using System;
     using System.Collections.Generic;
+    using System.Text.Json;
 
     public class GenericHandler {
 
@@ -24,13 +25,11 @@ namespace dotnet_samples
 
                 TPayload payload = default(TPayload);
 
-                // TODO:payload = JsonConvert.DeserializeObject(rawPayload, TPayload);
+                payload = JsonSerializer.Deserialize<TPayload>(rawPayload);
 
                 TResult result = handler(payload);
 
-                // TODO: rawResult = JsonConvert.SerializeObject(result);
-
-                rawResult = result.ToString();
+                rawResult = JsonSerializer.Serialize<TResult>(result);
 
                 return rawResult;
             };

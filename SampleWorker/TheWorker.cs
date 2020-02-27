@@ -10,7 +10,7 @@ namespace dotnet_samples.SampleWorker
 
             TheResult result = new TheResult
             {
-                Name = $"Payload: {payload}"
+                Name = $"Payload: {payload.Name}"
             };
 
             return result;
