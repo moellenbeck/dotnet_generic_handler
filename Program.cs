@@ -21,7 +21,7 @@
 
             string jsongPayload = JsonSerializer.Serialize<ThePayload>(payload);
 
-            var result = handler.handleTask(aTopic, jsongPayload);
+            var result = handler.HandleExternalTask(aTopic, jsongPayload);
 
             Console.WriteLine($"result is: {result}");
 

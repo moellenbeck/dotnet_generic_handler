@@ -2,6 +2,6 @@ namespace dotnet_samples.SampleWorker
 {
     public class TheResult
     {
-        public string Name {get; set;}
+        public string ResultName {get; set;}
     }
 }

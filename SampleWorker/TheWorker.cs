@@ -5,12 +5,12 @@ namespace dotnet_samples.SampleWorker
     public class TheWorker: IWorker<ThePayload, TheResult> 
     {
 
-        public TheResult Handle(ThePayload payload) {
-            Console.WriteLine(payload);
+        public TheResult Work(ThePayload payload) {
+            Console.WriteLine($"Payload: {payload.Name}");
 
             TheResult result = new TheResult
             {
-                Name = $"Payload: {payload.Name}"
+                ResultName = $"Payload: {payload.Name}"
             };
 
             return result;

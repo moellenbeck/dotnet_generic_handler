@@ -15,7 +15,7 @@ namespace dotnet_samples
             Func<TPayload, TResult> handler = (TPayload payload) => {
                 TResult result = default(TResult);
 
-                result = worker.Handle(payload);
+                result = worker.Work(payload);
 
                 return result;
             };
@@ -37,7 +37,7 @@ namespace dotnet_samples
             this.Handler.Add(topic, HandleExternalTask);
         }
 
-        public string handleTask(string topic, string payload) {
+        public string HandleExternalTask(string topic, string payload) {
             if (this.Handler.ContainsKey(topic)) {
                 var handler = this.Handler[topic];
 

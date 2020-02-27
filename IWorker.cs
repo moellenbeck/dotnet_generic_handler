@@ -6,7 +6,7 @@ namespace dotnet_samples
         where TPayload: new()
         where TResult: new()
     {
-        TResult Handle(TPayload payload);
+        TResult Work(TPayload payload);
     }
 
 }
