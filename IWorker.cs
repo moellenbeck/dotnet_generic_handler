@@ -1,12 +1,10 @@
 namespace dotnet_samples
 {
-    using System.Threading.Tasks;
-    
-    public interface IWorker<TPayload, TResult>
+    public interface IHandler<TPayload, TResult>
         where TPayload: new()
         where TResult: new()
     {
-        TResult Work(TPayload payload);
+        TResult Handle(TPayload payload);
     }
 
 }

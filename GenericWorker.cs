@@ -4,44 +4,47 @@ namespace dotnet_samples
     using System.Collections.Generic;
     using System.Text.Json;
 
-    public class GenericHandler {
+    public class GenericWorker {
 
         IDictionary<string, Func<string, string>> Handler = new Dictionary<string, Func<string, string>>();
 
-        public void Register<TPayload, TResult>(string topic, IWorker<TPayload, TResult> worker) 
+        //public void Register<TPayload, TResult>(string topic, IHandler<TPayload, TResult> handler) 
+        public void Register<TPayload, TResult>(string topic, HandlerActivater<TPayload, TResult> handlerActivator) 
             where TPayload: new() 
             where TResult: new()
         {
-            Func<TPayload, TResult> handler = (TPayload payload) => {
+            Func<TPayload, TResult> handlerFunc = (TPayload payload) => {
                 TResult result = default(TResult);
 
-                result = worker.Work(payload);
+                var handler = handlerActivator.Activate();
+
+                result = handler.Handle(payload);
 
                 return result;
             };
 
-            Func<string, string> HandleExternalTask = (string rawPayload) => {
+            Func<string, string> HandleExternalTaskFunc = (string rawPayload) => {
                 string rawResult = default(string);
 
                 TPayload payload = default(TPayload);
 
                 payload = JsonSerializer.Deserialize<TPayload>(rawPayload);
 
-                TResult result = handler(payload);
+                TResult result = handlerFunc(payload);
 
                 rawResult = JsonSerializer.Serialize<TResult>(result);
 
                 return rawResult;
             };
 
-            this.Handler.Add(topic, HandleExternalTask);
+            this.Handler.Add(topic, HandleExternalTaskFunc);
         }
 
         public string HandleExternalTask(string topic, string payload) {
             if (this.Handler.ContainsKey(topic)) {
-                var handler = this.Handler[topic];
+                var handlerFunc = this.Handler[topic];
 
-                return handler(payload);
+                return handlerFunc(payload);
             } 
             else 
             {

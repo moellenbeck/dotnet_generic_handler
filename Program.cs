@@ -11,9 +11,9 @@
         {
             var aTopic = "aTopic";
 
-            var handler = new GenericHandler();
+            var worker = new GenericWorker();
 
-            handler.Register<ThePayload, TheResult>(aTopic, new TheWorker());
+            worker.Register<ThePayload, TheResult>(aTopic, new HandlerActivater<ThePayload, TheResult>());
             
             ThePayload payload = new ThePayload {
                 Name = "Hello world"
@@ -21,7 +21,7 @@
 
             string jsongPayload = JsonSerializer.Serialize<ThePayload>(payload);
 
-            var result = handler.HandleExternalTask(aTopic, jsongPayload);
+            var result = worker.HandleExternalTask(aTopic, jsongPayload);
 
             Console.WriteLine($"result is: {result}");
 

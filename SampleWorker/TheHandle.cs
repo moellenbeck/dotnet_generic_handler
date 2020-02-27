@@ -2,10 +2,10 @@ namespace dotnet_samples.SampleWorker
 {
     using System;
 
-    public class TheWorker: IWorker<ThePayload, TheResult> 
+    public class TheHandler: IHandler<ThePayload, TheResult> 
     {
 
-        public TheResult Work(ThePayload payload) {
+        public TheResult Handle(ThePayload payload) {
             Console.WriteLine($"Payload: {payload.Name}");
 
             TheResult result = new TheResult
